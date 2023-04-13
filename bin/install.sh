@@ -54,5 +54,5 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 if type nvim &> /dev/null; then
 	nvim --headless +PluginInstall +qall 2> /dev/null
 elif type vim &> /dev/null; then
-	vim +PlugInstall +qall
+	vim +PluginInstall +qall
 fi
