@@ -64,7 +64,7 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export TERM=xterm-256color
 
-export PATH=$PATH:~/bin:~/.local/bin
+export PATH=$PATH:/opt/local/bin
 
 if [ "$PLATFORM" = "darwin" ]; then
 	export GREP_OPTIONS='--color=auto'
