@@ -29,6 +29,11 @@ cd
 touch .hushlogin
 
 if type zsh &> /dev/null; then
+	# Essential zsh plugins.
+	git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
+	git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
+
 	ln -s $REPO_PATH/rc/profile .zshrc
 	chsh -s $(which zsh)
 else
@@ -49,10 +54,5 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 if type nvim &> /dev/null; then
 	nvim --headless +PluginInstall +qall 2> /dev/null
 elif type vim &> /dev/null; then
-	vim -E -s -u ~/.vimrc +PlugInstall +qall 2> /dev/null
+	vim +PlugInstall +qall
 fi
-
-# Essential zsh plugins.
-git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
