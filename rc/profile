@@ -1,0 +1,117 @@
+[ -z "$PS1" ] && exit
+
+case "$(uname -sr)" in
+	Darwin*)
+		PLATFORM='darwin'
+		;;
+	Linux*icrosoft*)
+		PLATFORM='wsl'
+		;;
+	Linux*)
+		PLATFORM='linux'
+		;;
+	*BSD*)
+		PLATFORM='bsd'
+		;;
+	CYGWIN*|MINGW*|MINGW32*|MSYS*)
+		PLATFORM='windows'
+		;;
+esac
+
+if [ -n "$ZSH_VERSION" ]; then
+	setopt extended_glob
+
+	fpath+=$HOME/.zsh/pure
+
+	source ~/.zsh-nvm/zsh-nvm.plugin.zsh 2> /dev/null
+	source ~/.zsh/zsh-z/zsh-z.plugin.zsh
+	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+	bindkey '^k' autosuggest-accept
+
+	autoload -U promptinit && promptinit
+	autoload -U compinit && compinit
+
+	zstyle :prompt:pure:path color white
+	zstyle ':prompt:pure:prompt:*' color cyan
+	zstyle ':completion:*' menu select
+
+	prompt pure
+
+	setopt hist_ignore_all_dups
+	setopt hist_ignore_space
+
+	export HISTFILE="$HOME/.zsh_history"
+	ZLE_REMOVE_SUFFIX_CHARS=""
+
+	alias history='history 0'
+else
+	shopt -s extglob
+
+	export PS1="\W ❯ "
+
+	HISTCONTROL=ignoredups:ignorespace
+	
+	shopt -s histappend
+	shopt -s checkwinsize
+fi
+
+umask 022
+
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+export TERM=xterm-256color
+
+export PATH=$PATH:~/bin:~/.local/bin
+
+if [ "$PLATFORM" = "darwin" ]; then
+	export GREP_OPTIONS='--color=auto'
+fi
+
+if [ -x /usr/bin/dircolors ]; then
+	alias ls='ls --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+else
+	alias ls='ls -GFh'
+fi
+
+alias ll='ls -l'
+alias lls='ls -l'
+alias la='ls -Al'
+alias l='ls -CF'
+alias lh='ls -lh'
+alias lt='ls -lt'
+alias lth='ls -lt | head -n 15'
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias less='less -R'
+alias git-diff='git diff --color=always | less -r'
+
+if [ "$PLATFORM" = "wsl" ] || [ "$PLATFORM" = "windows" ]; then
+	alias open='cmd.exe /C start'
+	alias pbpaste='powershell.exe "[Console]::OutputEncoding = [Text.Encoding]::UTF8; Get-Clipboard"'
+	alias pbcopy=clip.exe
+elif [ "$PLATFORM" = "linux" ]; then
+	alias open='xdg-open'
+	alias pbpaste='xclip -selection clipboard -o'
+	alias pbcopy='xclip -silent -selection clipboard -in'
+fi
+
+if type nvim &> /dev/null; then
+	alias vi='nvim'
+fi
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export VISUAL=vim
+export EDITOR=vim
+
+sort -R ~/.writing-quotes | head -1

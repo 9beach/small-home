@@ -1,0 +1,79 @@
+set nocompatible
+filetype off
+
+set langmap=ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz
+
+syntax on
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'morhetz/gruvbox'
+call vundle#end()
+
+colorscheme gruvbox
+autocmd SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
+              \ |    highlight LineNr     ctermbg=NONE guibg=NONE
+              \ |    highlight SignColumn ctermbg=NONE guibg=NONE
+              \ |    highlight NonText    ctermbg=NONE guibg=NONE
+
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set noshowmode
+set wildmode=longest,list
+set autoindent
+set nocindent
+set smartindent
+set mouse=
+set background=dark
+set backup
+if !isdirectory($HOME."/.vim/backup")
+  silent! execute "!mkdir -p ~/.vim/backup"
+endif
+set backupdir=~/.vim/backup
+set noswapfile
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+
+let g:airline_section_x = '%{&filetype}'
+let g:airline_section_z = "ln:%l/%L(%p%%) col:%c"
+
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_before_where = 2
+let g:haskell_indent_after_bare_where = 2
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_indent_guard = 4
+let g:haskell_indent_case_alternative = 1
+
+if did_filetype()
+  finish
+endif
+if getline(1) =~ '^#!.*perl'
+  setfiletype perl
+  set nocindent shiftwidth=4
+endif
+
+filetype plugin indent on
+
+autocmd FileType perl setlocal shiftwidth=4 softtabstop=4 nocindent expandtab
+
+autocmd BufReadPre,FileReadPre *rc,*.c,*.h,*.sh,*.awk set tabstop=8
+autocmd BufReadPre,FileReadPre *rc,*.c,*.h,*.sh,*.awk set noexpandtab
+autocmd BufReadPre,FileReadPre *rc,*.c,*.h,*.sh,*.awk set shiftwidth=8
+
+autocmd BufReadPre,FileReadPre *.json,*.cc,*.cpp,*.hh,*.hpp,*.js,*.rb set tabstop=2
+autocmd BufReadPre,FileReadPre *.json,*.cc,*.cpp,*.hh,*.hpp,*.js,*.rb set expandtab
+autocmd BufReadPre,FileReadPre *.json,*.cc,*.cpp,*.hh,*.hpp,*.js,*.rb set cindent shiftwidth=2
+
+autocmd BufReadPre,FileReadPre *.hs,*.py,*.java,*.pl,*.lua set tabstop=4
+autocmd BufReadPre,FileReadPre *.hs,*.py,*.java,*.pl,*.lua set expandtab
+autocmd BufReadPre,FileReadPre *.hs,*.py,*.java,*.pl,*.lua set nocindent shiftwidth=4
