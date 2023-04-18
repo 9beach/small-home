@@ -36,10 +36,13 @@ esac
 cd
 touch .hushlogin
 
-if type zsh &> /dev/null; then
+if [ -n "$ZSH_VERSION" ]; then
 	# Essential zsh plugins.
+	rm -rf ~/.zsh/pure
 	git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
+	rm -rf ~/.zsh/zsh-autosuggestions
 	git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+	rm -rf ~/.zsh/zsh-z
 	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 
 	$LN $REPO_PATH/rc/profile .zshrc
