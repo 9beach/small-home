@@ -19,6 +19,9 @@ case "$(uname -sr)" in
 	*BSD*)
 		PLATFORM='bsd'
 		;;
+	CYGWIN*|MINGW*|MINGW32*|MSYS*)
+		PLATFORM='windows'
+		;;
 	*)
 		echo "Do not support $(uname -sr)." && exit 1
 		;;
