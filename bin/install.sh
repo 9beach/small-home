@@ -35,13 +35,13 @@ if type zsh &> /dev/null; then
 	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 
 	ln -s $REPO_PATH/rc/profile .zshrc
+	ln -s $REPO_PATH/rc/profile .bashrc
 	chsh -s $(which zsh)
 else
 	ln -s $REPO_PATH/rc/profile .bashrc
 fi
 
 ln -s $REPO_PATH/rc/writing-quotes .writing-quotes
-
 ln -s $REPO_PATH/rc/vimrc .vimrc
 if type nvim &> /dev/null; then
 	mkdir -p .config/nvim

@@ -26,6 +26,7 @@ if [ -n "$ZSH_VERSION" ]; then
 	source ~/.zsh-nvm/zsh-nvm.plugin.zsh 2> /dev/null
 	source ~/.zsh/zsh-z/zsh-z.plugin.zsh
 	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 	bindkey '^k' autosuggest-accept
 
 	autoload -U promptinit && promptinit
@@ -60,11 +61,14 @@ umask 022
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
 
+export PATH=$PATH:~/bin:~/.local/bin
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export VISUAL=vim
+export EDITOR=vim
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export TERM=xterm-256color
-
-export PATH=$PATH:/opt/local/bin
 
 if [ "$PLATFORM" = "darwin" ]; then
 	export GREP_OPTIONS='--color=auto'
@@ -79,6 +83,10 @@ else
 	alias ls='ls -GFh'
 fi
 
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias less='less -R'
 alias ll='ls -l'
 alias lls='ls -l'
 alias la='ls -Al'
@@ -87,12 +95,9 @@ alias lh='ls -lh'
 alias lt='ls -lt'
 alias lth='ls -lt | head -n 15'
 
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-
-alias less='less -R'
-alias git-diff='git diff --color=always | less -r'
+if type nvim &> /dev/null; then
+	alias vi='nvim'
+fi
 
 if [ "$PLATFORM" = "wsl" ] || [ "$PLATFORM" = "windows" ]; then
 	alias open='cmd.exe /C start'
@@ -104,14 +109,19 @@ elif [ "$PLATFORM" = "linux" ]; then
 	alias pbcopy='xclip -silent -selection clipboard -in'
 fi
 
-if type nvim &> /dev/null; then
-	alias vi='nvim'
+if [ "$PLATFORM" = "darwin" ]; then
+	alias dl='yt-dlp --embed-chapters --no-mtime --no-abort-on-error -o "%(title)#U.%(ext)s"'
+else
+	alias dl='yt-dlp --embed-chapters --no-mtime --no-abort-on-error -o "%(title)s.%(ext)s"'
 fi
 
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-export VISUAL=vim
-export EDITOR=vim
+alias batp='bat -p --paging=never --theme=gruvbox-dark'
+alias sortn="sort -t$'\t' -h -k"
+alias gitp='git pull'
+alias gitpl='git pull'
+alias gitps='git push'
+alias gitst='git status'
+alias gitdi='git diff'
+alias gitco='git commit -am'
 
 sort -R ~/.writing-quotes | head -1
