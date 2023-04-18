@@ -45,21 +45,26 @@ if [ -n "$ZSH_VERSION" ]; then
 	rm -rf ~/.zsh/zsh-z
 	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 
+	rm -f ~/.zshrc ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 	chsh -s $(which zsh)
 else
+	rm -f ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
+rm -f ~/.writing-quotes ~/.vimrc
 $LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
-$LN $REPO_PATH/rc/vimrc .vimrc
+$LN $REPO_PATH/rc/vimrc ~/.vimrc
 if type nvim &> /dev/null; then
 	mkdir -p .config/nvim
+	rm -f ~/.config/nvim/init.vim
 	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
 fi
 
 # Essential `vim` plugins.
+rm -rf ~/.vim/bundle/Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 if type nvim &> /dev/null; then
