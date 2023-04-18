@@ -34,7 +34,7 @@ esac
 
 # Links to my profiles.
 cd
-touch .hushlogin
+touch ~/.hushlogin
 
 if [ -n "$ZSH_VERSION" ]; then
 	# Essential zsh plugins.
@@ -45,18 +45,18 @@ if [ -n "$ZSH_VERSION" ]; then
 	rm -rf ~/.zsh/zsh-z
 	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 
-	$LN $REPO_PATH/rc/profile .zshrc
-	$LN $REPO_PATH/rc/profile .bashrc
+	$LN $REPO_PATH/rc/profile ~/.zshrc
+	$LN $REPO_PATH/rc/profile ~/.bashrc
 	chsh -s $(which zsh)
 else
-	$LN $REPO_PATH/rc/profile .bashrc
+	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
-$LN $REPO_PATH/rc/writing-quotes .writing-quotes
+$LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
 $LN $REPO_PATH/rc/vimrc .vimrc
 if type nvim &> /dev/null; then
 	mkdir -p .config/nvim
-	$LN $REPO_PATH/rc/vimrc .config/nvim/init.vim
+	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
 fi
 
 # Essential `vim` plugins.
