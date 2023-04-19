@@ -53,7 +53,9 @@ if type zsh &> /dev/null; then
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 
-	chsh -s $(which zsh)
+	if ! $SHELL =~ zsh; then
+		chsh -s $(which zsh)
+	fi
 else
 	rm -f ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
