@@ -40,16 +40,16 @@ if [ -n "$ZSH_VERSION" ]; then
 	# Essential zsh plugins.
 	if ! [ -d ~/.zsh/pure ]; then
 		rm -rf ~/.zsh/pure
+		git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 	fi
-	git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 	if ! [ -d ~/.zsh/zsh-autosuggestions ]; then
 		rm -rf ~/.zsh/zsh-autosuggestions
+		git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 	fi
-	git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 	if ! [ -d ~/.zsh/zsh-z ]; then
 		rm -rf ~/.zsh/zsh-z
+		git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 	fi
-	git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 
 	rm -f ~/.zshrc ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.zshrc
@@ -72,8 +72,8 @@ fi
 # Essential `vim` plugins.
 if ! [ -d ~/.vim/bundle/Vundle.vim ]; then
 	rm -rf ~/.vim/bundle/Vundle.vim
+	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 if type nvim &> /dev/null; then
 	nvim --headless +PluginInstall +qall 2> /dev/null
