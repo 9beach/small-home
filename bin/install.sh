@@ -36,24 +36,23 @@ esac
 cd
 touch ~/.hushlogin
 
-if [ -n "$ZSH_VERSION" ]; then
+if type zsh &> /dev/null; then
 	# Essential zsh plugins.
 	if ! [ -d ~/.zsh/pure ]; then
-		rm -rf ~/.zsh/pure
 		git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 	fi
 	if ! [ -d ~/.zsh/zsh-autosuggestions ]; then
-		rm -rf ~/.zsh/zsh-autosuggestions
 		git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 	fi
 	if ! [ -d ~/.zsh/zsh-z ]; then
-		rm -rf ~/.zsh/zsh-z
 		git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 	fi
 
 	rm -f ~/.zshrc ~/.bashrc
+
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
+
 	chsh -s $(which zsh)
 else
 	rm -f ~/.bashrc
@@ -71,7 +70,6 @@ fi
 
 # Essential `vim` plugins.
 if ! [ -d ~/.vim/bundle/Vundle.vim ]; then
-	rm -rf ~/.vim/bundle/Vundle.vim
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
