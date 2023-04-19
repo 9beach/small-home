@@ -11,10 +11,11 @@ else
 	LN='ln -s'
 fi
 
-TEMP_SUFFIX=$(basename $(mktemp))
+BACKUP_DIR=~/Downloads/home-backup.$(basename $(mktemp))
+mkdir -p "$BACKUP_DIR"
 
 function backup() {
-	mv "$1.$TEMP_SUFFIX" ~/Downloads 2> /dev/null || true
+	mv "$@" "$BACKUP_DIR" 2> /dev/null || true
 }
 
 case "$(uname -sr)" in
