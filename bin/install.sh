@@ -14,7 +14,7 @@ fi
 BACKUP_DIR=~/Downloads/home-backup.$(basename $(mktemp))
 mkdir -p "$BACKUP_DIR"
 
-function backup_profiles() {
+function backup_rc {
 	mv "$@" "$BACKUP_DIR" 2> /dev/null || true
 }
 
@@ -55,7 +55,7 @@ if type zsh &> /dev/null; then
 		git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 	fi
 
-	backup_profiles ~/.zshrc ~/.bashrc
+	backup_rc ~/.zshrc ~/.bashrc
 
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
@@ -64,11 +64,11 @@ if type zsh &> /dev/null; then
 		chsh -s $(which zsh)
 	fi
 else
-	backup_profiles ~/.bashrc
+	backup_rc ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
-backup_profiles ~/.writing-quotes ~/.vimrc
+backup_rc ~/.writing-quotes ~/.vimrc
 $LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
 $LN $REPO_PATH/rc/vimrc ~/.vimrc
 
@@ -79,7 +79,7 @@ fi
 
 if type nvim &> /dev/null; then
 	mkdir -p .config/nvim
-	backup_profiles ~/.config/nvim/init.vim
+	backup_rc ~/.config/nvim/init.vim
 	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
 
 	nvim --headless +PluginInstall +qall 2> /dev/null
