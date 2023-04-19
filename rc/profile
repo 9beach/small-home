@@ -27,9 +27,8 @@ if [ -n "$ZSH_VERSION" ]; then
 	source ~/.zsh/zsh-z/zsh-z.plugin.zsh
 	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-	export ZSH_AUTOSUGGEST_STRATEGY=( history completion )
-
-	bindkey '^I' autosuggest-accept
+	bindkey '^ ' autosuggest-accept
+	bindkey '^i' autosuggest-execute
 
 	autoload -U promptinit && promptinit
 	autoload -U compinit && compinit
