@@ -6,10 +6,16 @@ set -x
 set -e
 
 if [ $CP = 'yes' ]; then
-	LN='cp -f'
+	LN='cp'
 else
-	LN='ln -sf'
+	LN='ln -s'
 fi
+
+TEMP_SUFFIX=$(basename $(mktemp))
+
+function backup() {
+	mv "$1.$TEMP_SUFFIX" ~/Downloads 2> /dev/null || true
+}
 
 case "$(uname -sr)" in
 	Darwin*)
@@ -48,7 +54,7 @@ if type zsh &> /dev/null; then
 		git clone https://github.com/agkozak/zsh-z ~/.zsh/zsh-z
 	fi
 
-	rm -f ~/.zshrc ~/.bashrc
+	backup ~/.zshrc ~/.bashrc
 
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
@@ -57,18 +63,13 @@ if type zsh &> /dev/null; then
 		chsh -s $(which zsh)
 	fi
 else
-	rm -f ~/.bashrc
+	backup ~/.bashrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
-rm -f ~/.writing-quotes ~/.vimrc
+backup ~/.writing-quotes ~/.vimrc
 $LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
 $LN $REPO_PATH/rc/vimrc ~/.vimrc
-if type nvim &> /dev/null; then
-	mkdir -p .config/nvim
-	rm -f ~/.config/nvim/init.vim
-	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
-fi
 
 # Essential `vim` plugins.
 if ! [ -d ~/.vim/bundle/Vundle.vim ]; then
@@ -76,6 +77,10 @@ if ! [ -d ~/.vim/bundle/Vundle.vim ]; then
 fi
 
 if type nvim &> /dev/null; then
+	mkdir -p .config/nvim
+	backup ~/.config/nvim/init.vim
+	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
+
 	nvim --headless +PluginInstall +qall 2> /dev/null
 elif type vim &> /dev/null; then
 	vim +PluginInstall +qall
