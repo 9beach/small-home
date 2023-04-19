@@ -87,5 +87,7 @@ elif type vim &> /dev/null; then
 	vim +PluginInstall +qall
 fi
 
+set -x
+
 echo "The original files have been backuped in \"$BACKUP_DIR\"."
 echo 'Install completed. Please logout and login again.'
