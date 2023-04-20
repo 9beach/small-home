@@ -23,7 +23,6 @@ if [ -n "$ZSH_VERSION" ]; then
 
 	fpath+=$HOME/.zsh/pure
 
-	source ~/.zsh-nvm/zsh-nvm.plugin.zsh 2> /dev/null
 	source ~/.zsh/zsh-z/zsh-z.plugin.zsh
 	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
