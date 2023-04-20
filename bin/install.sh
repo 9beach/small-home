@@ -73,7 +73,7 @@ $LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
 $LN $REPO_PATH/rc/vimrc ~/.vimrc
 
 # Essential `vim` plugins.
-if ! [ -d ~/.vim/bundle/Vundle.vim ]; then
+if ! [ -d ~/.vim/bundle ]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 

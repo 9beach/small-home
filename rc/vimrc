@@ -20,9 +20,9 @@ au SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
 	    \ | highlight SignColumn ctermbg=NONE guibg=NONE
 	    \ | highlight NonText    ctermbg=NONE guibg=NONE
 
+let g:airline_theme='transparent'
 let g:airline_section_x = '%{&filetype}'
 let g:airline_section_z = "ln:%l/%L(%p%%) col:%c"
-let g:airline_theme='transparent'
 
 set tabstop=4
 set shiftwidth=4
