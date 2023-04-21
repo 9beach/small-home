@@ -5,7 +5,7 @@ REPO_PATH="$(dirname $(cd "$(dirname "$0")" > /dev/null 2>&1; pwd -P))"
 set -x
 set -e
 
-if [ $CP = 'yes' ]; then
+if [ "$CP" = 'yes' ]; then
 	LN='cp'
 else
 	LN='ln -s'
