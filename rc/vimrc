@@ -1,8 +1,6 @@
 set nocompatible
 filetype off
 
-set langmap=ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz
-
 syntax on
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -11,7 +9,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'relastle/bluewery.vim'
 Plugin 'morhetz/gruvbox'
+Plugin 'sainnhe/everforest'
 call vundle#end()
 
 colorscheme gruvbox
@@ -24,6 +24,7 @@ let g:airline_theme='transparent'
 let g:airline_section_x = '%{&filetype}'
 let g:airline_section_z = "ln:%l/%L(%p%%) col:%c"
 
+set background=dark
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -36,6 +37,7 @@ set noshowmode
 set nocindent
 set mouse=
 set background=dark
+set clipboard^=unnamed,unnamedplus
 if !isdirectory($HOME."/.vim/backup")
 	silent! execute "!mkdir -p ~/.vim/backup"
 endif
@@ -61,3 +63,5 @@ filetype plugin indent on
 au BufReadPre,FileReadPre *rc,*.{c,h,sh,awk} set noexpandtab ts=8 sw=8 sts=8
 au BufReadPre,FileReadPre *.{hs,py,java,pl,lua} set expandtab cindent sw=4 ts=4 sts=4
 au BufReadPre,FileReadPre *.{json,cc,cpp,hh,hpp,js,rb} set expandtab cindent sw=2 ts=2 sts=2
+
+set langmap=ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz

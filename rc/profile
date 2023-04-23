@@ -1,4 +1,7 @@
-[ -z "$PS1" ] && exit
+case $- in
+	*i*) ;;
+	  *) return;;
+esac
 
 case "$(uname -sr)" in
 	Darwin*)
@@ -26,8 +29,7 @@ if [ -n "$ZSH_VERSION" ]; then
 	source ~/.zsh/zsh-z/zsh-z.plugin.zsh
 	source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-	bindkey '^ ' autosuggest-accept
-	bindkey '^k' autosuggest-execute
+	bindkey '^k' autosuggest-accept
 	bindkey '^j' autosuggest-execute
 
 	autoload -U promptinit && promptinit
@@ -46,21 +48,40 @@ if [ -n "$ZSH_VERSION" ]; then
 	ZLE_REMOVE_SUFFIX_CHARS=""
 
 	alias history='history 0'
-else
+else # Only `bash`.
 	shopt -s extglob
 
 	export PS1="\W ❯ "
 
 	HISTCONTROL=ignoredups:ignorespace
-	
+
 	shopt -s histappend
 	shopt -s checkwinsize
+
+	[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+	if [ -f ~/.bash_aliases ]; then
+		. ~/.bash_aliases
+	fi
+
+	if ! shopt -oq posix; then
+		if [ -f /usr/share/bash-completion/bash_completion ]; then
+			. /usr/share/bash-completion/bash_completion
+		elif [ -f /etc/bash_completion ]; then
+			. /etc/bash_completion
+		fi
+	fi
 fi
 
 umask 022
 
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
+
+PYTHON_BIN="$(sh -c 'ls -d ~/Library/Python/*/bin 2> /dev/null | tail -1')"
+if ! [ -z "$PYTHON_BIN" ]; then
+	export PATH=$PYTHON_BIN:$PATH
+fi
 
 export PATH=$PATH:~/bin:~/.local/bin
 export LANG=en_US.UTF-8
@@ -76,6 +97,7 @@ if [ "$PLATFORM" = "darwin" ]; then
 fi
 
 if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'
@@ -94,11 +116,10 @@ alias la='ls -Al'
 alias l='ls -CF'
 alias lh='ls -lh'
 alias lt='ls -lt'
-alias lth='ls -lt | head -n 15'
-
-if type nvim &> /dev/null; then
-	alias vi='nvim'
-fi
+function lth {
+	ls -t "$@" | head -n 20
+}
+alias vi='nvim'
 
 if [ "$PLATFORM" = "wsl" ] || [ "$PLATFORM" = "windows" ]; then
 	alias open='cmd.exe /C start'
@@ -110,19 +131,4 @@ elif [ "$PLATFORM" = "linux" ]; then
 	alias pbcopy='xclip -silent -selection clipboard -in'
 fi
 
-if [ "$PLATFORM" = "darwin" ]; then
-	alias dl='yt-dlp --embed-chapters --no-mtime --no-abort-on-error -o "%(title)#U.%(ext)s"'
-else
-	alias dl='yt-dlp --embed-chapters --no-mtime --no-abort-on-error -o "%(title)s.%(ext)s"'
-fi
-
-alias batp='bat -p --paging=never --theme=gruvbox-dark'
-alias sortn="sort -t$'\t' -h -k"
-alias gitp='git pull'
-alias gitpl='git pull'
-alias gitps='git push'
-alias gitst='git status'
-alias gitdi='git diff'
-alias gitco='git commit -am'
-
-sort -R ~/.writing-quotes | head -1
+fortune -a
