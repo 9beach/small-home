@@ -56,7 +56,6 @@ if type zsh &> /dev/null; then
 	fi
 
 	backup_rc ~/.zshrc ~/.bashrc
-
 	$LN $REPO_PATH/rc/profile ~/.zshrc
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 
@@ -68,6 +67,7 @@ else
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
+backup_rc ~/.vimrc
 $LN $REPO_PATH/rc/vimrc ~/.vimrc
 
 # Essential `vim` plugins.
