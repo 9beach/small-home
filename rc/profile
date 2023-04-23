@@ -130,5 +130,3 @@ elif [ "$PLATFORM" = "linux" ]; then
 	alias pbpaste='xclip -selection clipboard -o'
 	alias pbcopy='xclip -silent -selection clipboard -in'
 fi
-
-fortune -a

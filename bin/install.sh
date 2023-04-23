@@ -68,8 +68,6 @@ else
 	$LN $REPO_PATH/rc/profile ~/.bashrc
 fi
 
-backup_rc ~/.writing-quotes ~/.vimrc
-$LN $REPO_PATH/rc/writing-quotes ~/.writing-quotes
 $LN $REPO_PATH/rc/vimrc ~/.vimrc
 
 # Essential `vim` plugins.
