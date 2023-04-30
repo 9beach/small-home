@@ -48,7 +48,7 @@ if [ -n "$ZSH_VERSION" ]; then
 	ZLE_REMOVE_SUFFIX_CHARS=""
 
 	alias history='history 0'
-else # Only `bash`.
+else # `bash`.
 	shopt -s extglob
 
 	export PS1="\W ❯ "
@@ -77,11 +77,6 @@ umask 022
 
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
-
-PYTHON_BIN="$(sh -c 'ls -d ~/Library/Python/*/bin 2> /dev/null | tail -1')"
-if ! [ -z "$PYTHON_BIN" ]; then
-	export PATH=$PYTHON_BIN:$PATH
-fi
 
 export PATH=$PATH:~/bin:~/.local/bin
 export LANG=en_US.UTF-8
@@ -130,3 +125,13 @@ elif [ "$PLATFORM" = "linux" ]; then
 	alias pbpaste='xclip -selection clipboard -o'
 	alias pbcopy='xclip -silent -selection clipboard -in'
 fi
+
+alias gitp='git pull'
+alias gitpl='git pull'
+alias gitps='git push'
+alias gitst='git status'
+alias gitdi='git diff'
+alias gitco='git commit -am'
+alias sortn="sort -t$'\t' -h -k"
+
+fortune -a
