@@ -133,5 +133,3 @@ alias gitst='git status'
 alias gitdi='git diff'
 alias gitco='git commit -am'
 alias sortn="sort -t$'\t' -h -k"
-
-fortune -a
