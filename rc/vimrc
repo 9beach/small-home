@@ -1,28 +1,63 @@
 set nocompatible
+set encoding=utf-8
+set fileencoding=utf-8
+
 filetype off
 
 syntax on
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'relastle/bluewery.vim'
-Plugin 'morhetz/gruvbox'
-Plugin 'sainnhe/everforest'
-call vundle#end()
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'relastle/bluewery.vim'
+Plug 'morhetz/gruvbox'
+Plug 'sainnhe/everforest'
+Plug 'jacoborus/tender.vim'
+Plug 'sjl/badwolf'
+Plug 'kepano/flexoki-neovim'
+call plug#end()
 
-colorscheme gruvbox
-au SourcePost * highlight Normal     ctermbg=NONE guibg=NONE
-	    \ | highlight LineNr     ctermbg=NONE guibg=NONE
-	    \ | highlight SignColumn ctermbg=NONE guibg=NONE
-	    \ | highlight NonText    ctermbg=NONE guibg=NONE
+colorscheme everforest
 
-let g:airline_theme='transparent'
+set langmap=ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz
+
+" 이전 단어 삭제
+inoremap <C-ㅈ> <C-w>
+" 현재 위치에서 라인 시작까지 삭제
+inoremap <C-ㅕ> <C-u>
+" 라인 시작으로 이동
+inoremap <C-ㅁ> <Home>
+" 라인 끝으로 이동
+inoremap <C-ㄷ> <End>
+" 이전 자동완성 항목
+inoremap <C-ㅔ> <C-p>
+" 다음 자동완성 항목
+inoremap <C-ㅜ> <C-n>
+" 들여쓰기 감소
+inoremap <C-ㅇ> <C-d>
+" 들여쓰기 증가
+inoremap <C-ㅅ> <C-t>
+" 한 단어 앞으로 이동
+inoremap <C-b> <Left>
+inoremap <C-ㅠ> <Left>
+" 한 단어 뒤로 이동
+inoremap <C-f> <Right>
+inoremap <C-ㄹ> <Right>
+" 한 글자 지우기
+inoremap <C-ㅗ> <C-h>
+" 엔터
+inoremap <C-ㅓ> <C-j>
+
+au SourcePost		  * highlight Normal        ctermbg=NONE guibg=NONE
+			\ | highlight LineNr            ctermbg=NONE guibg=NONE
+			\ | highlight SignColumn        ctermbg=NONE guibg=NONE
+			\ | highlight EndOfBuffer       ctermbg=NONE guibg=NONE
+			\ | highlight NonText           ctermbg=NONE guibg=NONE
+			\ | highlight NormalNC          ctermbg=NONE guibg=NONE
+
 let g:airline_section_x = '%{&filetype}'
-let g:airline_section_z = "ln:%l/%L(%p%%) col:%c"
+let g:airline_section_z = "ln:%l/%L(%p%%) col:%v"
 
 set background=dark
 set tabstop=4
@@ -37,7 +72,6 @@ set noshowmode
 set nocindent
 set mouse=
 set background=dark
-set clipboard^=unnamed,unnamedplus
 if !isdirectory($HOME."/.vim/backup")
 	silent! execute "!mkdir -p ~/.vim/backup"
 endif
@@ -60,8 +94,16 @@ let g:haskell_indent_guard = 4
 let g:haskell_indent_case_alternative = 1
 
 filetype plugin indent on
-au BufReadPre,FileReadPre *rc,*.{c,h,sh,awk} set noexpandtab ts=8 sw=8 sts=8
-au BufReadPre,FileReadPre *.{hs,py,java,pl,lua} set expandtab cindent sw=4 ts=4 sts=4
-au BufReadPre,FileReadPre *.{json,cc,cpp,hh,hpp,js,rb} set expandtab cindent sw=2 ts=2 sts=2
 
-set langmap=ㅁa,ㅠb,ㅊc,ㅇd,ㄷe,ㄹf,ㅎg,ㅗh,ㅑi,ㅓj,ㅏk,ㅣl,ㅡm,ㅜn,ㅐo,ㅔp,ㅂq,ㄱr,ㄴs,ㅅt,ㅕu,ㅍv,ㅈw,ㅌx,ㅛy,ㅋz
+autocmd FileType markdown,text setlocal indentkeys-=o,O
+
+autocmd BufRead,BufNewFile * if getline(1) =~ '^#!.*sh' | setlocal noexpandtab ts=8 sw=8 sts=8 | endif
+
+autocmd BufReadPre,FileReadPre *rc,*.{c,h,sh,awk} setlocal noexpandtab ts=8 sw=8 sts=8
+autocmd BufReadPre,FileReadPre *.{hs,py,java,pl,lua} setlocal expandtab cindent sw=4 ts=4 sts=4
+autocmd BufReadPre,FileReadPre *.{json,cc,md,cpp,hh,hpp,js,rb} setlocal expandtab cindent sw=2 ts=2 sts=2
+autocmd FileType swift setlocal expandtab cindent sw=2 ts=2 sts=2
+augroup SwiftFormat
+	autocmd!
+	autocmd FileType swift autocmd BufWritePre <buffer> call SwiftFormat()
+augroup END
