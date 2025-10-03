@@ -14,7 +14,7 @@ if [ -n "$ZSH_VERSION" ]; then
 	bindkey '^j' autosuggest-execute
 
 	autoload -U promptinit && promptinit
-	autoload -U compinit && compinit -u
+	autoload -U compinit && compinit
 
 	zstyle :prompt:pure:path color white
 	zstyle ':prompt:pure:prompt:*' color cyan
