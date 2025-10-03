@@ -75,14 +75,14 @@ if ! [ -d ~/.vim/bundle ]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-if type nvim &> /dev/null; then
-	mkdir -p .config/nvim
-	backup_rc ~/.config/nvim/init.vim
-	$LN $REPO_PATH/rc/vimrc ~/.config/nvim/init.vim
-
-	nvim --headless +PluginInstall +qall 2> /dev/null
-elif type vim &> /dev/null; then
-	vim +PluginInstall +qall
+if command -v nvim > /dev/null; then
+        curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        nvim --headless +PlugInstall +qall 2> /dev/null
+else
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        vim +PlugInstall +qall 2> /dev/null
 fi
 
 set +x
